@@ -10,6 +10,9 @@ module.exports = (Bot) => {
 
     loader.addJson({ parameters: require('./parameters')(Bot) });
     loader.addJson({ services: require('./core') });
+    loader.addJson({ services: require('./managers') });
+    loader.addJson({ services: require('./listeners') });
+    loader.addJson({ services: require('./handlers') });
 
     builder.addLoader(loader);
 

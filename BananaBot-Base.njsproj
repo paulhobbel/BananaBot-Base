@@ -22,18 +22,34 @@
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\Manager\" />
+    <Folder Include="src\Handler\" />
+    <Folder Include="src\Listener\" />
+    <Folder Include="src\Module\" />
+    <Folder Include="src\Module\Core\" />
+    <Folder Include="src\Module\Core\Command\" />
     <Folder Include="tests\" />
     <Folder Include="src\" />
     <Folder Include="src\Config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\AbstractCommand.js" />
+    <Compile Include="src\AbstractModule.js" />
     <Compile Include="src\Bot.js" />
     <Compile Include="src\Config\Container.js" />
     <Compile Include="src\Config\core.js" />
+    <Compile Include="src\Config\handlers.js" />
+    <Compile Include="src\Config\listeners.js" />
+    <Compile Include="src\Config\managers.js" />
     <Compile Include="src\Config\parameters.js" />
+    <Compile Include="src\Handler\MessageHandler.js" />
     <Compile Include="src\index.js" />
+    <Compile Include="src\Listener\MessageListener.js" />
     <Compile Include="src\Loader.js" />
     <Compile Include="src\Logger.js" />
+    <Compile Include="src\Manager\ModuleManager.js" />
+    <Compile Include="src\Module\Core\Command\HelpCommand.js" />
+    <Compile Include="src\Module\Core\CoreModule.js" />
     <Compile Include="tests\test_bot.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />

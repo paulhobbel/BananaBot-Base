@@ -22,7 +22,6 @@ class Loader extends EventEmitter {
             this.checkLoaded.bind(this, true),
             container.getParameter('loader_timeout') * 1000
         );
-        this.printLoaded = _.throttle(this.printLoaded.bind(this), 1000);
     }
 
     start() {
@@ -49,23 +48,18 @@ class Loader extends EventEmitter {
         });
 
         client.on('ready', () => {
-            this.waitForNoChange(
-                () => client.servers.length,
-                () => {
-                    this.logger.info("All servers seem to be loaded.");
+            this.logger.info(`Loaded ${client.servers.length} servers.`);
 
-                    this.setLoaded('discord');
-                    client.admin = client.users.get('id', this.container.getParameter('admin_id'));
+            this.setLoaded('discord');
+            client.admin = client.users.get('id', this.container.getParameter('admin_id'));
 
-                    if (this.container.getParameter('status') !== undefined) {
-                        client.setStatus('online', this.container.getParameter('status'));
-                    }
+            if (this.container.getParameter('status') !== undefined) {
+                client.setStatus('online', this.container.getParameter('status'));
+            }
 
-                    // Handle messages here...
-                    this.setLoaded('messages');
-                },
-                this.printLoaded.bind(this)
-            );
+            this.container.get('handler.message').run().then(() => {
+                this.setLoaded('messages');
+            });
         });
 
         client.on('error', this.logger.error);
@@ -75,19 +69,16 @@ class Loader extends EventEmitter {
         }
     }
 
-    printLoaded() {
-        let loaded = this.container.get('client').servers.length;
-        this.logger.info(`Servers Loaded: ${loaded}`);
-    }
-
     loadModules() {
-        //SOMETHING SOMETHING HERE.... :P
+        let moduleManager = this.container.get('manager.module');
+
+        moduleManager.install(require('./Module/Core/CoreModule'));
+
         this.setLoaded('modules');
     }
 
     getModuleCount() {
-        //SOMETHING SOMETHING HERE.... :P
-        return 0;
+        return this.container.get('manager.module').getModules().length;
     }
 
     checkLoaded(fail) {
@@ -150,28 +141,6 @@ class Loader extends EventEmitter {
         }
 
         return this.loaded.discord && this.loaded.messages;
-    }
-
-    waitForNoChange(item, callback, nonReadyCallback, length) {
-        length = !length ? 5000 : length;
-        const intervalTime = 50;
-        let last = 0, time = 0;
-        let interval = setInterval(() => {
-            if (last === item()) {
-                if (length - time <= 0) {
-                    clearInterval(interval);
-
-                    return callback();
-                }
-
-                time += intervalTime;
-            } else {
-                time = 0;
-            }
-
-            nonReadyCallback();
-            last = item();
-        }, intervalTime)
     }
 }
 
