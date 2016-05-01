@@ -33,7 +33,7 @@ class StatsCommand extends AbstractCommand {
 
         // Anddd for our lovely TheBeast...
         this.matches(/^status$/g, () => {
-            this.reply(`I'm online u deep shit u blind?`, true);
+            this.reply(`I'm online u dip shit u blind?`, true);
         });
     }
 }
