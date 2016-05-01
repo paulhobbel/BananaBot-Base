@@ -18,7 +18,6 @@ class HelpCommand extends AbstractCommand {
 
     displayHelp() {
         let moduleManager = this.container.get('manager.module');
-            //commandList = moduleManager.getCommands();
 
         let message = "Hello! Below you will find a list of my modules and their commands.";
 
@@ -76,10 +75,31 @@ ${commands.join("\n")}
         this.reply(message).catch(this.logger.error);
     }
 
+    displayCommandHelp(name) {
+        let moduleManager = this.container.get('manager.module'),
+            commandList = moduleManager.getCommands();
+        let command = commandList.find(command => command.name === name);
+        if (command) {
+            if (command.noHelp) {
+                return null;
+            }
+
+            if (command.adminCommand && !this.isAdmin()) {
+                return null;
+            }
+
+            this.reply(`${command.name} ${command.help}\n${command.description}`);
+        }
+    }
+
 
     handle() {
         this.matches(/^help$/g, () => {
             this.displayHelp();
+        });
+
+        this.matches(/^help (.+)$/, (matches) => {
+            //this.displayCommandHelp(matches[1]);
         });
     }
 }
