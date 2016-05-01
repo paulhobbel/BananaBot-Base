@@ -49,6 +49,8 @@
     <Compile Include="src\Logger.js" />
     <Compile Include="src\Manager\ModuleManager.js" />
     <Compile Include="src\Module\Core\Command\HelpCommand.js" />
+    <Compile Include="src\Module\Core\Command\RestartCommand.js" />
+    <Compile Include="src\Module\Core\Command\StatsCommand.js" />
     <Compile Include="src\Module\Core\CoreModule.js" />
     <Compile Include="tests\test_bot.js" />
   </ItemGroup>
