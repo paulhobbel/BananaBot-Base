@@ -15,7 +15,7 @@ class RestartCommand extends AbstractCommand {
     }
 
     handle() {
-        this.responds(/^(restart)$/gi, () => {
+        this.matches(/^restart$/g, () => {
             if (!this.isAdmin()) {
                 return false;
             }

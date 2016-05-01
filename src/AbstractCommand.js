@@ -85,51 +85,29 @@ class AbstractCommand {
         return this.author.id == this.client.admin.id;
     }
 
-    reply(content, delay, deleteDelay, mention) {
-        if (mention) {
-            content = this.author.mention() + ', ' + content;
-        }
-
-        return this.sendMessage(this.message, content, delay, deleteDelay);
-    }
-
-    sendMessage(location, message, delay, deleteDelay) {
-        if (message.length > MAX_MESSAGE_LENGTH * MAX_MESSAGE_COUNT) {
-            return this.logger.error("Message is too long. Will spam API.");
-        }
-
-        delay = delay === undefined ? 0 : delay;
-        if (delay) {
-            return setTimeout(() => this.sendMessage(location, message, 0, deleteDelay), delay);
-        }
-
-        if (message.length > 2000) {
-            this.logger.error("Message too long to send: " + message);
-            throw error("Message too long");
-        }
-
+    sendMessage(location, message) {
         return new Promise((resolve, reject) => {
+            if (message.length > MAX_MESSAGE_LENGTH * MAX_MESSAGE_COUNT) {
+                reject(this.logger.error("Message is to long, rejecting..."));
+            }
+
             this.client.sendMessage(location, message)
                 .catch(reject)
-                .then(message => {
-                    if (deleteDelay) {
-                        return this.client.deleteMessage(message, { wait: deleteDelay })
-                            .catch(reject)
-                            .then(() => {
-                                resolve(message);
-                            });
-                    }
-
-                    resolve(message);
-                });
+                .then(resolve);
         });
+    }
+
+    reply(message, mention) {
+        if (mention) message = this.author.mention() + ', ' + message;
+
+        return this.sendMessage(this.message, message);
     }
 
     handle() {
         throw Error("Commands must override the handle function!");
     }
 
-    getMatches(content, regex, callback, noPrint) {
+    getMatches(content, regex, callback) {
         let matches = regex.exec(content);
 
         if (matches === null) {
@@ -138,44 +116,31 @@ class AbstractCommand {
 
         let result = callback(matches);
 
-        if (!noPrint && result !== false) {
+        if (result !== false) {
             let array = {
                 Command: {
                     time: this.time,
                     author: this.author.username,
-                    server: this.server !== 'pm' ? this.server.name : 'pm',
-                    channel: this.channel.name,
+                    server: this.server ? this.server.name : 'dm',
+                    channel: this.channel ? this.channel.name : 'dm',
                     content: this.content,
                     botMention: this.botMention,
-                    pm: this.pm,
-                    regex: regex ? regex.toString() : 'uh.....',
+                    regex: regex.toString(),
                     matches: matches,
                     mentions: this.mentions
                 }
             };
 
-            this.logger.info("\n" + prettyjson.render(array));
+            this.logger.debug("\n" + prettyjson.render(array));
         }
     }
 
-    hears(regex, callback, noPrint) {
-        if (noPrint === undefined) {
-            noPrint = false;
-        }
-
-        return this.getMatches(this.rawContent, regex, callback, noPrint);
-    }
-
-    responds(regex, callback, noPrint) {
+    matches(regex, callback) {
         if (!this.botMention) {
             return;
         }
 
-        if (noPrint === undefined) {
-            noPrint = false;
-        }
-
-        return this.getMatches(this.content, regex, callback, noPrint)
+        return this.getMatches(this.content, regex, callback);
     }
 }
 
