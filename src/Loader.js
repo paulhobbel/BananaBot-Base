@@ -8,7 +8,7 @@ class Loader extends EventEmitter {
         super();
 
         this.container = container;
-        this.Bot = Bot;
+        this.bot = Bot;
         this.logger = container.get('logger');
         this.loaded = {
             discord: false,
