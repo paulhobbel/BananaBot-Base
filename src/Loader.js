@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const _ = require('lodash'),
+const mongoose = require('mongoose'),
       EventEmitter = require('events').EventEmitter;
 
 class Loader extends EventEmitter {
@@ -11,10 +11,10 @@ class Loader extends EventEmitter {
         this.bot = Bot;
         this.logger = container.get('logger');
         this.loaded = {
+            storage: false,
             discord: false,
             modules: false,
-            messages: false,
-            extra: {}
+            messages: false
         };
 
         this.on('loaded', this.checkLoaded.bind(this));
@@ -26,12 +26,17 @@ class Loader extends EventEmitter {
 
     start() {
         this.emit('start.pre', this);
-        //this.loadStorage(); TODO:Find the best storage solution for this bot, maybe mongodb
+        this.loadStorage();
         this.loadModules();
         this.emit('start.post', this);
     }
 
-    //loadStorage() {}
+    loadStorage() {
+        mongoose.connect(this.container.getParameter('mongo_url'));
+        mongoose.connection.once('open', () => {
+            this.setLoaded('storage');
+        });
+    }
 
     loadDiscord() {
         let data = this.container.getParameter('login'),
@@ -95,10 +100,10 @@ class Loader extends EventEmitter {
         this.logger.debug({
             Status: {
                 Ready: this.isLoaded() ? 'Yes' : 'No',
+                Storage: this.loaded.storage ? 'Connected' : 'Connecting...',
                 Discord: this.loaded.discord ? 'Logged In' : 'Logging In',
                 Messages: this.loaded.messages ? 'Listening' : 'Starting listener',
-                Modules: this.loaded.modules ? this.getModuleCount() : 'Loading modules',
-                Extra: this.loaded.extra
+                Modules: this.loaded.modules ? this.getModuleCount() : 'Loading modules'
             }
         });
 
@@ -128,14 +133,8 @@ class Loader extends EventEmitter {
     }
 
     isLoaded() {
-        for (let type in this.loaded.extra) {
-            if (!this.loaded.extra.hasOwnProperty(type)) {
-                continue;
-            }
-
-            if (!this.loaded.extra[type]) {
-                return false;
-            }
+        if (!this.loaded.storage) {
+            return false;
         }
 
         if (this.loaded.modules && !this.loaded.discord && !this.loadingDiscord) {

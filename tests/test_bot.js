@@ -7,6 +7,7 @@ try {
     let options = {
         admin_id: config.admin_id,
         token: config.auth.token,
+        mongo_url: config.mongo_url,
         prefix: '!',
         modules: []
     }

@@ -34,5 +34,8 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
+# Storage
+data
+
 # Configs
 config.json

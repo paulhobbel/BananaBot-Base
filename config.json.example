@@ -1,5 +1,6 @@
 ﻿{
   "admin_id": "your id in discord you can get it by \@yournamehere",
+  "mongo_url": "localhost:27017",
   "auth": {
     "token": "your discordbot token (srr only supports tokens atm)"
   }

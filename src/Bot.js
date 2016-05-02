@@ -36,7 +36,7 @@ class Bot {
             })
             .setDefined([
                 'status',
-                'queue',
+                'mongo_url',
                 'log_dir',
                 'token',
                 'email',
@@ -57,6 +57,7 @@ class Bot {
             .setAllowedTypes('modules', 'array')
             .setAllowedTypes('status', 'string')
             .setAllowedTypes('admin_id', 'string')
+            .setAllowedTypes('mongo_url', 'string')
             .setAllowedTypes('log_dir', 'string')
             .setAllowedTypes('token', 'string')
             .setAllowedTypes('email', 'string')
@@ -97,11 +98,6 @@ class Bot {
     }
 
     onReady() {
-        if (typeof process.send === 'function') {
-            this.logger.debug('Sending online message');
-            process.send('online');
-        }
-
         this.logger.info("Bot is connected, waiting for messages");
 
         let client = this.container.get('client');

@@ -28,6 +28,7 @@
     <Folder Include="src\Module\" />
     <Folder Include="src\Module\Core\" />
     <Folder Include="src\Module\Core\Command\" />
+    <Folder Include="src\Model\" />
     <Folder Include="tests\" />
     <Folder Include="src\" />
     <Folder Include="src\Config\" />
