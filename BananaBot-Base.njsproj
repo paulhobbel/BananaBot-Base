@@ -29,6 +29,7 @@
     <Folder Include="src\Module\Core\" />
     <Folder Include="src\Module\Core\Command\" />
     <Folder Include="src\Model\" />
+    <Folder Include="src\Brain\" />
     <Folder Include="tests\" />
     <Folder Include="src\" />
     <Folder Include="src\Config\" />
@@ -37,6 +38,8 @@
     <Compile Include="src\AbstractCommand.js" />
     <Compile Include="src\AbstractModule.js" />
     <Compile Include="src\Bot.js" />
+    <Compile Include="src\Brain\MemoryBrain.js" />
+    <Compile Include="src\Config\brains.js" />
     <Compile Include="src\Config\Container.js" />
     <Compile Include="src\Config\core.js" />
     <Compile Include="src\Config\handlers.js" />
