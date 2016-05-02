@@ -13,6 +13,7 @@ module.exports = (Bot) => {
     loader.addJson({ services: require('./managers') });
     loader.addJson({ services: require('./listeners') });
     loader.addJson({ services: require('./handlers') });
+    loader.addJson({ services: require('./brains') });
 
     builder.addLoader(loader);
 
