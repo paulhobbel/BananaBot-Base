@@ -73,6 +73,9 @@ class Loader extends EventEmitter {
         let moduleManager = this.container.get('manager.module');
 
         moduleManager.install(require('./Module/Core/CoreModule'));
+        for (let module of this.bot.options.modules) {
+            moduleManager.install(module);
+        }
 
         this.setLoaded('modules');
     }
