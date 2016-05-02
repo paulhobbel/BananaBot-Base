@@ -14,6 +14,7 @@ module.exports = (Bot) => {
     loader.addJson({ services: require('./listeners') });
     loader.addJson({ services: require('./handlers') });
     loader.addJson({ services: require('./brains') });
+    loader.addJson({ services: require('./helpers') });
 
     builder.addLoader(loader);
 

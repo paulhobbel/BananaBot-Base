@@ -6,7 +6,7 @@
     <ProjectGuid>{12472c0d-266e-448b-9c5a-3ab6b38d17eb}</ProjectGuid>
     <ProjectHome />
     <ProjectView>ShowAllFiles</ProjectView>
-    <StartupFile />
+    <StartupFile>tests\test_bot.js</StartupFile>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
@@ -30,6 +30,7 @@
     <Folder Include="src\Module\Core\Command\" />
     <Folder Include="src\Model\" />
     <Folder Include="src\Brain\" />
+    <Folder Include="src\Helper\" />
     <Folder Include="tests\" />
     <Folder Include="src\" />
     <Folder Include="src\Config\" />
@@ -43,10 +44,12 @@
     <Compile Include="src\Config\Container.js" />
     <Compile Include="src\Config\core.js" />
     <Compile Include="src\Config\handlers.js" />
+    <Compile Include="src\Config\helpers.js" />
     <Compile Include="src\Config\listeners.js" />
     <Compile Include="src\Config\managers.js" />
     <Compile Include="src\Config\parameters.js" />
     <Compile Include="src\Handler\MessageHandler.js" />
+    <Compile Include="src\Helper\RoleHelper.js" />
     <Compile Include="src\index.js" />
     <Compile Include="src\Listener\MessageListener.js" />
     <Compile Include="src\Loader.js" />
