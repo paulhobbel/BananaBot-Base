@@ -49,6 +49,7 @@
     <Compile Include="src\Config\managers.js" />
     <Compile Include="src\Config\parameters.js" />
     <Compile Include="src\Handler\MessageHandler.js" />
+    <Compile Include="src\Helper\RegexHelper.js" />
     <Compile Include="src\Helper\RoleHelper.js" />
     <Compile Include="src\index.js" />
     <Compile Include="src\Listener\MessageListener.js" />
