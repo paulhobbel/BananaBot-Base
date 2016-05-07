@@ -1,4 +1,5 @@
 ﻿{
+  "debug": false,
   "admin_id": "your id in discord you can get it by \@yournamehere",
   "mongo_url": "mongodb://localhost/thedbname",
   "auth": {

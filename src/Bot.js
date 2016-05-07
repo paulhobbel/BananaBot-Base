@@ -6,14 +6,7 @@ const _ = require('lodash'),
       Loader = require('./Loader');
 
 class Bot {
-    constructor(env, debug, options) {
-        this.env = env;
-        this.debug = debug;
-
-        /*process.on('unhandledRejection', err => {
-            throw err;
-        });*/
-
+    constructor(options) {
         let resolver = this.buildResolver();
         resolver.resolve(options)
             .then(this.buildContainer.bind(this))
@@ -29,6 +22,7 @@ class Bot {
                 name: pkg.name,
                 version: pkg.version,
                 author: pkg.author,
+                debug: false,
                 loaderTimeout: 60,
                 container: () => {
                     return {}
@@ -46,6 +40,7 @@ class Bot {
                 'name',
                 'version',
                 'author',
+                'debug',
                 'admin_id',
                 'prefix',
                 'modules'
@@ -53,6 +48,7 @@ class Bot {
             .setAllowedTypes('name', 'string')
             .setAllowedTypes('version', 'string')
             .setAllowedTypes('author', 'string')
+            .setAllowedTypes('debug', 'boolean')
             .setAllowedTypes('prefix', 'string')
             .setAllowedTypes('modules', 'array')
             .setAllowedTypes('status', 'string')
@@ -99,17 +95,10 @@ class Bot {
 
     onReady() {
         this.logger.info("Bot is connected, waiting for messages");
-
-        let client = this.container.get('client');
-        client.sendMessage(client.admin, 'Bot is connected, waiting for messages');
-    }
-
-    isEnv(env) {
-        return env === this.env;
     }
 
     isDebug() {
-        return this.debug;
+        return this.options.debug;
     }
 }
 

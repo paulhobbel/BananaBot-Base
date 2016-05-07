@@ -1,6 +1,6 @@
 {
   "name": "bananabot-base",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "The base of a discord bot named bananabot",
   "main": "src/index.js",
   "scripts": {

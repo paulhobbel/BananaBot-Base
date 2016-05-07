@@ -2,9 +2,7 @@
 
 module.exports = (Bot) => {
     return {
-        env: Bot.env,
-        dev: Bot.env === 'dev',
-        debug: Bot.debug,
+        debug: Bot.options.debug,
         prefix: Bot.options.prefix,
         name: Bot.options.name,
         login: {
