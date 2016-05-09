@@ -94,11 +94,11 @@ ${commands.join("\n")}
 
 
     handle() {
-        this.matches(/^help$/, () => {
+        this.matches(/^help$/g, () => {
             this.displayHelp();
         });
 
-        this.matches(/^(.+)$/, (matches) => {
+        this.matches(/^help (.+)$/, (matches) => {
             //this.displayCommandHelp(matches[1]);
         });
     }

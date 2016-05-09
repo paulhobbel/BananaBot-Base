@@ -7,20 +7,6 @@ const _ = require('lodash'),
 
 class Bot {
     constructor(options) {
-        // From https://github.com/meew0/Lethe/blob/master/lethe.js#L569 (ty bud)
-        process.on('uncaughtException', function (err) {
-            // Handle ECONNRESETs caused by the player and fixes #1
-            if (err.code == 'ECONNRESET') {
-                console.log('Got an ECONNRESET! This is *probably* not an error. Stacktrace:');
-                console.log(err.stack);
-            } else {
-                // Normal error handling
-                console.log(err);
-                console.log(err.stack);
-                process.exit(0);
-            }
-        });
-
         let resolver = this.buildResolver();
         resolver.resolve(options)
             .then(this.buildContainer.bind(this))

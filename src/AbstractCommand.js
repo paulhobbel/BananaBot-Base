@@ -48,7 +48,7 @@ class AbstractCommand {
     }
 
     get content() {
-        let regex = new RegExp(`^(${this.client.user.mention()})|(\\${this.prefix}${this.name})`);
+        let regex = new RegExp(`^(${this.client.user.mention()})|(\\${this.prefix})`);
         return _.trim(this.rawContent.replace(regex, ''));
     }
 
