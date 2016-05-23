@@ -1,9 +1,10 @@
 ﻿'use strict';
 
 const _ = require('lodash'),
-      chalk = require('chalk'),
-      createResolver = require('options-resolver'),
-      Loader = require('./Loader');
+    chalk = require('chalk'),
+    createResolver = require('options-resolver'),
+    Loader = require('./Loader'),
+    User = require('./Model/User');
 
 class Bot {
     constructor(options) {
@@ -98,7 +99,7 @@ class Bot {
     run() {
         this.logger = this.container.get('logger');
         this.logger.level = this.isDebug() ? 'debug' : 'info';
-        this.logger.exitOnError = true;
+        this.logger.exitOnError = false;
 
         console.log(chalk.green(`\n\n\t${this.options.name} v${this.options.version} - by ${this.options.author}\n\n`));
 
@@ -109,6 +110,18 @@ class Bot {
 
     onReady() {
         this.logger.info("Bot is connected, waiting for messages");
+        let client = this.container.get('client');
+        this.logger.debug(`Fetching ${client.users.length} users`);
+        client.users.forEach(user => {
+            User.findOne({ _id: user.id }).then(u => {
+                // Well don't know that user yet...
+                if (!u) {
+                    User.create({ _id: user.id, name: user.username }).then(u => {
+                        this.logger.debug(`Added a new user with the name ${u.name} to the database.`);
+                    }).catch(this.logger.error);
+                }
+            }).catch(this.logger.error);
+        });
     }
 
     isDebug() {

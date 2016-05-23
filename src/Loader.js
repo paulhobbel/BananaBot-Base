@@ -14,7 +14,8 @@ class Loader extends EventEmitter {
             storage: false,
             discord: false,
             modules: false,
-            messages: false
+            messages: false,
+            presence: false
         };
 
         this.on('loaded', this.checkLoaded.bind(this));
@@ -65,6 +66,10 @@ class Loader extends EventEmitter {
             this.container.get('handler.message').run().then(() => {
                 this.setLoaded('messages');
             });
+
+            this.container.get('handler.presence').run().then(() => {
+                this.setLoaded('presence');
+            });
         });
 
         client.on('error', this.logger.error);
@@ -103,7 +108,8 @@ class Loader extends EventEmitter {
                 Storage: this.loaded.storage ? 'Connected' : 'Connecting...',
                 Discord: this.loaded.discord ? 'Logged In' : 'Logging In',
                 Messages: this.loaded.messages ? 'Listening' : 'Starting listener',
-                Modules: this.loaded.modules ? this.getModuleCount() : 'Loading modules'
+                Presence: this.loaded.presence ? 'Listening' : 'Starting listener',
+                Modules: this.loaded.modules ? this.getModuleCount() : 'Loading modules',
             }
         });
 
