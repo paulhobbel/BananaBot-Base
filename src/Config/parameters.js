@@ -16,6 +16,8 @@ module.exports = (Bot) => {
         mongo_url: Bot.options.mongo_url || null,
         log_dir: Bot.options.log_dir || null,
         loader_timeout: Bot.options.loaderTimeout,
-        client_args: { forceFetchUsers: true }
+        client_args: {
+            forceFetchUsers: true
+        }
     }
 };
