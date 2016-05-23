@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ItsBanana/BananaBot-Base.git"
+    "url": "git+https://github.com/BananaDev/BananaBot-Base.git"
   },
   "author": "Paul Hobbel <paulhobbel@hotmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ItsBanana/BananaBot-Base/issues"
+    "url": "https://github.com/BananaDev/BananaBot-Base/issues"
   },
-  "homepage": "https://github.com/ItsBanana/BananaBot-Base#readme",
+  "homepage": "https://github.com/BananaDev/BananaBot-Base#readme",
   "dependencies": {
     "bluebird": "^3.3.5",
     "chalk": "^1.1.3",
