@@ -14,6 +14,7 @@ class Loader extends EventEmitter {
             storage: false,
             discord: false,
             modules: false,
+            api: false,
             messages: false,
             presence: false
         };
@@ -89,6 +90,16 @@ class Loader extends EventEmitter {
 
         this.setLoaded('modules');
     }
+    
+    loadApi() {
+        let apiManager = this.container.get('manager.api');
+        
+        apiManager.installRoutes().then(() => {
+            console.log("Hi?");
+            apiManager.startServer();
+            this.setLoaded('api');
+        }).catch(this.logger.error);
+    }
 
     getModuleCount() {
         return this.container.get('manager.module').getModules().length;
@@ -110,6 +121,7 @@ class Loader extends EventEmitter {
                 Messages: this.loaded.messages ? 'Listening' : 'Starting listener',
                 Presence: this.loaded.presence ? 'Listening' : 'Starting listener',
                 Modules: this.loaded.modules ? this.getModuleCount() : 'Loading modules',
+                API: this.loaded.api ? 'Serving' : 'Starting...',
             }
         });
 
@@ -142,13 +154,18 @@ class Loader extends EventEmitter {
         if (!this.loaded.storage) {
             return false;
         }
+        
+        if (this.loaded.modules && !this.loaded.api && !this.loadingApi) {
+            this.loadingApi = true;
+            this.loadApi();
+        }
 
         if (this.loaded.modules && !this.loaded.discord && !this.loadingDiscord) {
             this.loadingDiscord = true;
             this.loadDiscord();
         }
 
-        return this.loaded.discord && this.loaded.messages;
+        return this.loaded.discord && this.loaded.api && this.loaded.messages && this.loaded.presence;
     }
 }
 

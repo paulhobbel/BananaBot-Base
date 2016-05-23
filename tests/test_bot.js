@@ -9,7 +9,11 @@ try {
         admin_id: config.admin_id,
         token: config.auth.token,
         mongo_url: config.mongo_url,
-        prefix: '!',
+        
+        api_host: '127.0.0.1',
+        api_port: '1337',
+        
+        prefix: '*',
         modules: []
     }
 

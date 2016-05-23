@@ -10,6 +10,10 @@ module.exports = (Bot) => {
             email: Bot.options.email,
             password: Bot.options.password
         },
+        api: {
+            host: Bot.options.api_host,
+            port: Bot.options.api_port
+        },
         status: Bot.options.status,
         admin_id: Bot.options.admin_id,
         commands: Bot.options.commands,

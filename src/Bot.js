@@ -38,6 +38,8 @@ class Bot {
                 version: pkg.version,
                 author: pkg.author,
                 debug: false,
+                api_host: '127.0.0.1',
+                api_port: '3000',
                 loaderTimeout: 60,
                 container: () => {
                     return {}
@@ -56,6 +58,8 @@ class Bot {
                 'version',
                 'author',
                 'debug',
+                'api_host',
+                'api_port',
                 'admin_id',
                 'prefix',
                 'modules'
@@ -68,6 +72,8 @@ class Bot {
             .setAllowedTypes('modules', 'array')
             .setAllowedTypes('status', 'string')
             .setAllowedTypes('admin_id', 'string')
+            .setAllowedTypes('api_host', 'string')
+            .setAllowedTypes('api_port', 'string')
             .setAllowedTypes('mongo_url', 'string')
             .setAllowedTypes('log_dir', 'string')
             .setAllowedTypes('token', 'string')

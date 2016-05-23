@@ -39,6 +39,17 @@ class ModuleManager {
 
         return commands;
     }
+    
+    getRoutes() {
+        let routes = [];
+        this.modules.forEach(module => {
+            if(module.hasRoutes) {
+                routes = routes.concat(module.getRoutes());
+            }
+        });
+        
+        return routes;
+    }
 
     getModules() {
         return this.modules;

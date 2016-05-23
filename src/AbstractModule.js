@@ -20,6 +20,14 @@ class AbstractModule {
     get commandsDir() {
         throw new Error('commandsDir is not extended');
     }
+    
+    get hasRoutes() {
+        return false;
+    }
+    
+    get routesDir() {
+        throw new Error('routesDir is not extended');
+    }
 
     getCommands() {
         if (!this.commands) {
@@ -32,6 +40,20 @@ class AbstractModule {
         }
 
         return this.commands;
+    }
+    
+    getRoutes() {
+        if(!this.routes) {
+            this.routes = _.map(require('require-all')(this.routesDir), route => {
+                return {
+                    method: route.method,
+                    path: route.path,
+                    handler: route.handler
+                };
+            });
+        }
+        
+        return this.routes;
     }
 
     isDefaultEnabled() {
